@@ -6,11 +6,10 @@ length = 9
 def solve_sudoku(sudoku):
     if not is_valid_sudoku(sudoku):
         raise Exception("non-valid sudoku")
-    solution = sudoku
     empty_fields = np.argwhere(sudoku == 0)
     for i in range(len(empty_fields)):
         print("Debug: Now testing row %s, column %s" % (empty_fields[i][0], empty_fields[i][1]))
-        solution[empty_fields[i][0]][empty_fields[i][1]] = \
+        sudoku[empty_fields[i][0]][empty_fields[i][1]] = \
             try_all_numbers(sudoku, empty_fields[i][0], empty_fields[i][1])
 
 
@@ -27,6 +26,7 @@ def try_all_numbers(sudoku, row,  column):
 def is_allowed_in_row(sudoku, row, value):
     for column in range(length):
         if value == sudoku[row][column]:
+            print("Debug: number " + str(value) + " is NOT allowed_in_row.")
             return False
     print("Debug: number " + str(value) + " is allowed_in_row.")
     return True
@@ -35,6 +35,7 @@ def is_allowed_in_row(sudoku, row, value):
 def is_allowed_in_column(sudoku, column, value):
     for row in range(length):
         if value == sudoku[row][column]:
+            print("Debug: number " + str(value) + " is NOT allowed_in_column.")
             return False
     print("Debug: number " + str(value) + " is allowed_in_column.")
     return True
@@ -47,6 +48,7 @@ def is_allowed_in_square(sudoku, row, column, value):
         y = int(i % 3 + square_column * 3)
         row_content = sudoku[y]
         if sudoku[x][y] == value:
+            print("Debug: number " + str(value) + " is NOT allowed_in_square.")
             return False
     print("Debug: number " + str(value) + " is allowed_in_square.")
     return True
